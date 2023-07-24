@@ -21,7 +21,7 @@ export function RoleCard({ role, index }: RoleCardProps) {
         onPress={() => setModalRole(role.roleType)}
       >
         {/*  @ts-ignore */}
-        <Image source={role.roleType.roleImg} className="w-20 h-20  " />
+        <Image source={role.roleType.portrait} className="w-20 h-20  " />
       </TouchableOpacity>
       {/*  @ts-ignore */}
       <Typography>{role.roleType._name}</Typography>

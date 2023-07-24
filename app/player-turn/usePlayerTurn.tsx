@@ -21,7 +21,11 @@ export const usePlayerTurn = () => {
 
   const handleSkillChoice = (skillOrder: "first" | "second") => {
     state.setSelectedSkillOrder(skillOrder)
-    if (role.getSkill(skillOrder).isTarget) {
+    const skill = role.getSkill(skillOrder)
+    if (skill.isTarget) {
+      if (skill.interactWithDeadPlayers) {
+        state.setUseDeadPlayers(true)
+      }
       return state.setShowTargetPlayers(true)
     }
     handleSkillUse(skillOrder)
@@ -34,6 +38,7 @@ export const usePlayerTurn = () => {
     if (game.noNextPlayer()) {
       return endNight()
     }
+    //@ts-ignore
     router.replace({ pathname: "pass-to-player", params: "" })
   }
 
@@ -44,6 +49,7 @@ export const usePlayerTurn = () => {
       mostVotedPlayer.setDeathMark(0)
     }
     game.endNight()
+    //@ts-ignore
     router.replace({ pathname: "turn-messages", params: "" })
   }
 

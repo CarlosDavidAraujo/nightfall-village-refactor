@@ -1,20 +1,25 @@
+import { Game } from "@/services/game/Game"
 import { Role } from "@/services/roles/Role"
 import { Seer } from "@/services/roles/Seer"
 import { Villager } from "@/services/roles/Villager"
 import { Werewolf } from "@/services/roles/Werewolf"
 import { create } from "zustand"
 
+interface RoleConstructor {
+  new (game: Game): Role
+}
+
 export type RoleProps = {
   name?: string
   count: number
-  roleType: typeof Role
+  roleType: RoleConstructor
 }
 
 type RoleStore = {
   selectedRoles: RoleProps[]
   nonSelectedRoles: RoleProps[]
   modalRole: RoleProps | null
-  setModalRole: (roleType: typeof Role) => void
+  setModalRole: (roleType: RoleConstructor) => void
   clearModalRole: () => void
   increaseCount: (roleIndex: number) => void
   decreaseCount: (roleIndex: number) => void
@@ -30,7 +35,7 @@ export const useRoleStore = create<RoleStore>((set) => ({
   nonSelectedRoles: [],
   modalRole: null,
 
-  setModalRole: (roleType: typeof Role) =>
+  setModalRole: (roleType) =>
     set((state) => {
       const modalRole =
         state.selectedRoles.find(
@@ -44,7 +49,7 @@ export const useRoleStore = create<RoleStore>((set) => ({
 
   clearModalRole: () => set(() => ({ modalRole: null })),
 
-  increaseCount: (roleIndex: number) =>
+  increaseCount: (roleIndex) =>
     set((state) => {
       const { selectedRoles } = state
       const updatedSelectedRoles = [...selectedRoles]
@@ -55,7 +60,7 @@ export const useRoleStore = create<RoleStore>((set) => ({
       return { selectedRoles: updatedSelectedRoles }
     }),
 
-  decreaseCount: (roleIndex: number) =>
+  decreaseCount: (roleIndex) =>
     set((state) => {
       const { selectedRoles, nonSelectedRoles } = state
       const updatedSelectedRoles = [...selectedRoles]
@@ -74,7 +79,7 @@ export const useRoleStore = create<RoleStore>((set) => ({
       }
     }),
 
-  addToSelectedRoles: (roleIndex: number) =>
+  addToSelectedRoles: (roleIndex) =>
     set((state) => {
       const updatedNonSelectedRoles = [...state.nonSelectedRoles]
       const updatedSelectedRoles = [...state.selectedRoles]

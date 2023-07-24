@@ -5,26 +5,27 @@ import { Player } from "@/services/player/Player"
 import { Game } from "@/services/game/Game"
 
 type TargetPlayersProps = {
+  currentPlayer: Player
+  players: Player[]
   selectedPlayer: Player | null
   setSelectedPlayer: (player: Player) => void
-  game: Game
 }
 
 export function TargetPlayers({
-  game,
+  currentPlayer,
+  players,
   selectedPlayer,
   setSelectedPlayer,
 }: TargetPlayersProps) {
-  const players = game!.getAlivePlayers()
-  const currentPlayerId = game!.getCurrentPlayer().getId()
-
   return (
     <ScrollView>
       {/*  @ts-ignore */}
       <SimpleGrid
         itemDimension={100}
         maxItemsPerRow={3}
-        data={players.filter((player) => player.getId() !== currentPlayerId)}
+        data={players.filter(
+          (player) => player.getId() !== currentPlayer.getId()
+        )}
         renderItem={({ item }) => (
           <Button
             title={item.getName()}

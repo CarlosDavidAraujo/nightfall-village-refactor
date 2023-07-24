@@ -14,28 +14,23 @@ export const useSkillManager = (role: Role) => {
   const setFeedbackMessage = usePlayerTurnStore(
     (state) => state.setFeedbackMessage
   )
+
   const roles: Record<string, roleSkills> = {
     Villager: {
       first: (role: Villager) => role.pray(selectedPlayer!),
-      second: (role: Villager) => {
-        const discoveredWerewolf = role.snoop()
-        if (discoveredWerewolf) {
-          setFeedbackMessage(
-            `${discoveredWerewolf.getName()} é um(a) lobisomem entre nós`
-          )
-        }
-      },
+      second: (role: Villager) => setFeedbackMessage(role.snoop()),
     },
     Seer: {
       first: (role: Seer) =>
         setFeedbackMessage(role.useVision(selectedPlayer!)),
-      second: (role: Seer) => console.log("visao postuma"),
+      second: (role: Seer) =>
+        setFeedbackMessage(role.useVision(selectedPlayer!)),
     },
     Werewolf: {
       first: (role: Werewolf) => {
         role.eat(selectedPlayer!)
       },
-      second: (role: Werewolf) => console.log("transmutar"),
+      second: (role: Werewolf) => role.transmute(),
     },
   }
   const roleName = role.constructor.name

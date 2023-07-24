@@ -1,8 +1,7 @@
 import { Image, View } from "react-native"
 import { useRoleStore } from "./store"
-import { Skill } from "@/services/roles/Role"
 import { Typography } from "@/components/typography/Typography"
-import { IconFangs } from "@/components/icons/fangs"
+import { SkillProps } from "@/services/skills/Skill"
 
 export function RoleModalContent() {
   const modalRole = useRoleStore((state) => state.modalRole)
@@ -13,19 +12,19 @@ export function RoleModalContent() {
       <Typography variant="header">{modalRole?.roleType._name}</Typography>
       <View className="my-4 p-2 border-md border-dashed border-primary-foreground">
         {/*  @ts-ignore */}
-        <Image source={modalRole?.roleType.roleImg} className="w-60 h-60" />
+        <Image source={modalRole?.roleType.portrait} className="w-60 h-60" />
       </View>
       {/*  @ts-ignore */}
       <Typography>{modalRole?.roleType.description}</Typography>
       {/*  @ts-ignore */}
-      <SkillContainer skill={modalRole?.roleType.skills[0]} />
+      <SkillContainer skill={modalRole?.roleType.skillsInfo["first"]} />
       {/*  @ts-ignore */}
-      <SkillContainer skill={modalRole?.roleType.skills[1]} />
+      <SkillContainer skill={modalRole?.roleType.skillsInfo["second"]} />
     </View>
   )
 }
 
-function SkillContainer({ skill }: { skill: Skill }) {
+function SkillContainer({ skill }: { skill: SkillProps }) {
   const Icon = skill?.icon
   return (
     <View className="mt-4 w-full p-2 border-sm rounded">

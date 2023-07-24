@@ -30,6 +30,7 @@ export const useVotation = () => {
   //----------------Aux functions-----------------//
 
   const navigateToNextPlayer = () => {
+    //@ts-ignore
     router.replace({
       pathname: "/pass-to-player",
       params: { lastPage: "/votation" },
@@ -37,6 +38,7 @@ export const useVotation = () => {
   }
 
   const navigateToTurnMessages = () => {
+    //@ts-ignore
     router.replace({
       pathname: "/turn-messages",
       params: { lastPage: "/votation" },

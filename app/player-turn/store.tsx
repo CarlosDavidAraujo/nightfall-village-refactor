@@ -8,6 +8,8 @@ type PlayerTurnStore = {
   setSelectedPlayer: (player: Player) => void
   showTargetPlayers: boolean
   setShowTargetPlayers: (value: boolean) => void
+  useDeadPlayers: boolean
+  setUseDeadPlayers: (value: boolean) => void
   selectedSkillOrder?: "first" | "second"
   setSelectedSkillOrder: (order: "first" | "second") => void
   getMostVotedPlayer: (players: Player[]) => Player | null
@@ -17,6 +19,7 @@ type PlayerTurnStore = {
 const initialState = {
   feedbackMessage: "",
   selectedPlayer: null,
+  useDeadPlayers: false,
   showTargetPlayers: false,
   selectedSkillOrder: undefined,
 }
@@ -26,6 +29,7 @@ export const usePlayerTurnStore = create<PlayerTurnStore>()((set) => ({
   setFeedbackMessage: (message) => set(() => ({ feedbackMessage: message })),
   setSelectedPlayer: (player) => set(() => ({ selectedPlayer: player })),
   setShowTargetPlayers: (value) => set(() => ({ showTargetPlayers: value })),
+  setUseDeadPlayers: (value) => set(() => ({ useDeadPlayers: value })),
   setSelectedSkillOrder: (order) => set({ selectedSkillOrder: order }),
   getMostVotedPlayer: (players) => {
     let mostVotedPlayers: Player[] = []

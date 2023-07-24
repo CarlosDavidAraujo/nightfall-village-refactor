@@ -18,7 +18,8 @@ export default function Votation() {
         <TargetPlayers
           selectedPlayer={state.selectedPlayer}
           setSelectedPlayer={state.setSelectedPlayer}
-          game={game}
+          currentPlayer={game.getCurrentPlayer()}
+          players={game.getAlivePlayers()}
         />
 
         <View className="flex-row w-full px-2 gap-2 justify-between">

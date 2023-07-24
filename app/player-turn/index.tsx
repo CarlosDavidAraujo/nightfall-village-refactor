@@ -23,7 +23,7 @@ export default function PlayerTurnPage() {
       <View className="flex-1 bg-primary items-center p-2">
         {/*  @ts-ignore */}
         <Typography variant="header">{role.getName()}</Typography>
-        <Image source={role.getRoleImg()} className="my-4 w-60 h-60" />
+        <Image source={role.getPortrait()} className="my-4 w-60 h-60" />
 
         {!state.selectedSkillOrder && (
           <>
@@ -41,7 +41,12 @@ export default function PlayerTurnPage() {
 
         {state.showTargetPlayers && (
           <TargetPlayers
-            game={game}
+            players={
+              state.useDeadPlayers
+                ? game.getDeadPlayers()
+                : game.getAlivePlayers()
+            }
+            currentPlayer={game.getCurrentPlayer()}
             selectedPlayer={state.selectedPlayer}
             setSelectedPlayer={state.setSelectedPlayer}
           />
