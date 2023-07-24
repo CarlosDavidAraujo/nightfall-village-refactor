@@ -39,6 +39,7 @@ export class Seer extends Role {
     super({
       game: game,
       name: Seer._name,
+      team: "villagers",
       description: Seer.description,
       portrait: Seer.portrait,
       skills: {

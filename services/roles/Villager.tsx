@@ -40,6 +40,7 @@ export class Villager extends Role {
     super({
       game: game,
       name: Villager._name,
+      team: "villagers",
       description: Villager.description,
       portrait: Villager.portrait,
       skills: {

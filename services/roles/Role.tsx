@@ -2,9 +2,12 @@ import { Game } from "../game/Game"
 import { Player } from "../player/Player"
 import { SkillOrder, Skills } from "../skills/Skill"
 
+type team = "villagers" | "werewolves"
+
 type RoleConstructorProps = {
   game: Game
   name: string
+  team: team
   description: string
   skills: Skills
   portrait: string
@@ -19,6 +22,7 @@ export class Role {
   protected player: Player | null = null
   protected game: Game
   private name: string
+  private team: team
   private fakeName: FakeName
   private description: string
   private skills: Skills
@@ -37,6 +41,7 @@ export class Role {
   constructor(params: RoleConstructorProps) {
     this.game = params.game
     this.name = params.name
+    this.team = params.team
     this.description = params.description
     this.skills = params.skills
     this.portrait = params.portrait
@@ -49,6 +54,7 @@ export class Role {
   getName = () => this.name
   getPortrait = () => this.portrait
   setPlayer = (player: Player) => (this.player = player)
+  getTeam = () => this.team
 
   //---------------------NOME FALSO--------------------------//
   getFakeName = () =>

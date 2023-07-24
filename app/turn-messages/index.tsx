@@ -7,7 +7,7 @@ import { useGameStore } from "../game-store"
 export default function NightEndPage() {
   const router = useRouter()
   const game = useGameStore((state) => state.game)
-
+  const winnerTeamMessage = game.getVictoryManager().getWinnerTeam()?.message
   const turnMessages = game?.getMessages()
   //@ts-ignore
   const { lastPage } = useLocalSearchParams()
@@ -26,11 +26,15 @@ export default function NightEndPage() {
     <>
       <Stack.Screen options={{ headerTitle: "", headerBackVisible: false }} />
       <View className="flex-1 items-center p-2 bg-primary">
-        {turnMessages?.map((message, index) => (
-          <Typography key={index} variant="header">
-            {message}
-          </Typography>
-        ))}
+        {winnerTeamMessage ? (
+          <Typography variant="header">{winnerTeamMessage}</Typography>
+        ) : (
+          turnMessages?.map((message, index) => (
+            <Typography key={index} variant="header">
+              {message}
+            </Typography>
+          ))
+        )}
 
         <View className="w-full mt-auto">
           <Button

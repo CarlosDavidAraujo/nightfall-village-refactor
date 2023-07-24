@@ -1,4 +1,5 @@
 import { Player } from "../player/Player"
+import { VictoryManager } from "./victory-manager"
 
 export class Game {
   private alivePlayers: Player[] = []
@@ -7,6 +8,7 @@ export class Game {
   private currentPlayerIndex = 0
   private currentTurn = 1
   private phase: "night" | "day" = "night"
+  private victoryManager = new VictoryManager(this)
 
   constructor() {}
 
@@ -30,7 +32,7 @@ export class Game {
   }
 
   //----------------Turnos-----------------//
-
+  getVictoryManager = () => this.victoryManager
   getCurrentTurn = () => this.currentTurn
   getPhase = () => this.phase
 

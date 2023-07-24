@@ -40,6 +40,7 @@ export class Werewolf extends Role {
     super({
       game: game,
       name: Werewolf._name,
+      team: "werewolves",
       description: Werewolf.description,
       portrait: Werewolf.portrait,
       skills: {
