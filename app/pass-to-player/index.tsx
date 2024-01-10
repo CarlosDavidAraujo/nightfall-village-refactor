@@ -13,9 +13,9 @@ export default function PassToPlayer() {
   const { lastPage } = params
 
   const handleNextPage = () => {
-    if (lastPage === "/votation") {
+    if (lastPage === "/clock" || lastPage === "/votation") {
       // @ts-ignore
-      return router.replace(lastPage)
+      return router.replace("/votation")
     }
     // @ts-ignore
     router.replace("/show-role")

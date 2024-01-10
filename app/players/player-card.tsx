@@ -7,6 +7,7 @@ import { CardDecoration } from "./card-decoration"
 export function PlayerCard({ index }: { index: number }) {
   const removePlayer = usePlayerStore((state) => state.removePlayer)
   const setPlayer = usePlayerStore((state) => state.setPlayer)
+  const players = usePlayerStore((state) => state.players)
 
   return (
     <View className="bg-primary border-primary-foreground border-md relative aspect-[2/1]">
@@ -21,6 +22,7 @@ export function PlayerCard({ index }: { index: number }) {
       <View className="flex-1 items-center p-2 ">
         <IconFeather className="fill-primary-foreground w-10 aspect-square" />
         <TextInput
+          value={players[index]}
           className="border-b-1 border-primary-foreground text-center text-lg"
           style={{ fontFamily: "Balthazar_400Regular" }}
           placeholder="Digite um nome"

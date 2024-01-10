@@ -15,9 +15,11 @@ export class Werewolf extends Role {
   static skillsInfo: SkillsInfo = {
     first: {
       name: "Faminto",
-      description: "Escolha um jogador que morrerá esta noite.",
+      description:
+        "Escolha um jogador que morrerá esta noite. Você pode ver os votos dos outros lobisomens. Se a votação empatar a vítima sera aleatória",
       icon: (props) => <IconFangs {...props} />,
       isTarget: true,
+      isPassive: false,
       interactWithDeadPlayers: false,
       hasFeedback: false,
       order: "first",
@@ -29,6 +31,7 @@ export class Werewolf extends Role {
         "Outros jogadores te verão como aldeão até o final da próxima rodada, mas suas habilidades são desabilitadas por um turno.",
       icon: (props) => <IconDespair {...props} />,
       isTarget: false,
+      isPassive: false,
       interactWithDeadPlayers: false,
       hasFeedback: false,
       order: "second",

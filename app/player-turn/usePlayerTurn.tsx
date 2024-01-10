@@ -24,7 +24,7 @@ export const usePlayerTurn = () => {
     const skill = role.getSkill(skillOrder)
     if (skill.isTarget) {
       if (skill.interactWithDeadPlayers) {
-        state.setUseDeadPlayers(true)
+        return state.setUseDeadPlayers(true)
       }
       return state.setShowTargetPlayers(true)
     }
@@ -33,7 +33,6 @@ export const usePlayerTurn = () => {
 
   const handlePassToNextPlayer = () => {
     game.goToNextPlayer()
-    game.clearMessages()
     state.resetPlayerTurnStore()
     if (game.noNextPlayer()) {
       return endNight()
@@ -44,9 +43,10 @@ export const usePlayerTurn = () => {
 
   //--------Funções auxiliares--------//
   const endNight = () => {
+    const tauntingPlayer = game.getTauntingPlayer()
     const mostVotedPlayer = state.getMostVotedPlayer(game.getAlivePlayers())
-    if (mostVotedPlayer) {
-      mostVotedPlayer.setDeathMark(0)
+    if (mostVotedPlayer && !tauntingPlayer) {
+      mostVotedPlayer.setDeath(0)
     }
     game.endNight()
     //@ts-ignore

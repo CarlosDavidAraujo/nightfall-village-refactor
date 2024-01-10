@@ -52,7 +52,7 @@ export default function RoleSelectionPage() {
 
   const handleStartGame = () => {
     const players = linkPlayersToRoles()
-    game.setAlivePlayers(players)
+    game.setPlayers(players)
     // @ts-ignore
     router.push("/pass-to-player")
   }
@@ -96,7 +96,10 @@ export default function RoleSelectionPage() {
 
         <View className="p-2">
           <Button
-            disabled={selectedRolesCount() !== playersNames.length}
+            disabled={
+              selectedRolesCount() !== playersNames.length ||
+              playersNames.length === 0
+            }
             title="Confirmar"
             inverted
             onPress={handleStartGame}

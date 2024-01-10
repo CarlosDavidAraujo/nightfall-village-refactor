@@ -17,7 +17,10 @@ export default function ClockPage() {
             title="Iniciar votação"
             inverted
             onPress={() =>
-              router.replace({ pathname: "/votation", params: "" })
+              router.replace({
+                pathname: "/pass-to-player",
+                params: { lastPage: "/clock" },
+              })
             }
           />
         </View>

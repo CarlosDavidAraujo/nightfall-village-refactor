@@ -5,10 +5,15 @@ type PlayerStore = {
   addPlayer: () => void
   removePlayer: (playerIndex: number) => void
   setPlayer: (playerName: string, playerIndex: number) => void
+  resetStore: () => void
+}
+
+const initialState = {
+  players: ["", "", "", "", ""],
 }
 
 export const usePlayerStore = create<PlayerStore>()((set) => ({
-  players: ["", "", "", "", ""],
+  ...initialState,
   addPlayer: () => set((state) => ({ players: [...state.players, ""] })),
   removePlayer: (playerIndex: number) =>
     set((state) => ({
@@ -20,4 +25,5 @@ export const usePlayerStore = create<PlayerStore>()((set) => ({
       updatedPlayers[playerIndex] = playerName
       return { players: updatedPlayers }
     }),
+  resetStore: () => set(initialState),
 }))

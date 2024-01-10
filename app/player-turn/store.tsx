@@ -29,7 +29,8 @@ export const usePlayerTurnStore = create<PlayerTurnStore>()((set) => ({
   setFeedbackMessage: (message) => set(() => ({ feedbackMessage: message })),
   setSelectedPlayer: (player) => set(() => ({ selectedPlayer: player })),
   setShowTargetPlayers: (value) => set(() => ({ showTargetPlayers: value })),
-  setUseDeadPlayers: (value) => set(() => ({ useDeadPlayers: value })),
+  setUseDeadPlayers: (value) =>
+    set(() => ({ useDeadPlayers: value, showTargetPlayers: value })),
   setSelectedSkillOrder: (order) => set({ selectedSkillOrder: order }),
   getMostVotedPlayer: (players) => {
     let mostVotedPlayers: Player[] = []

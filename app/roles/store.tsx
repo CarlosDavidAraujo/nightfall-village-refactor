@@ -1,8 +1,16 @@
 import { Game } from "@/services/game/Game"
+import { Assassin } from "@/services/roles/Assassin"
+import { Doctor } from "@/services/roles/Doctor"
+import { Gunslinger } from "@/services/roles/Gunslinger"
+import { Hunter } from "@/services/roles/Hunter"
+import { Priest } from "@/services/roles/Priest"
 import { Role } from "@/services/roles/Role"
 import { Seer } from "@/services/roles/Seer"
+import { Templar } from "@/services/roles/Templar"
+import { ToughGuy } from "@/services/roles/ToughGuy"
 import { Villager } from "@/services/roles/Villager"
 import { Werewolf } from "@/services/roles/Werewolf"
+import { Witch } from "@/services/roles/Witch"
 import { create } from "zustand"
 
 interface RoleConstructor {
@@ -15,6 +23,12 @@ export type RoleProps = {
   roleType: RoleConstructor
 }
 
+type RoleStoreInitialState = {
+  selectedRoles: RoleProps[]
+  nonSelectedRoles: RoleProps[]
+  modalRole: RoleProps | null
+}
+
 type RoleStore = {
   selectedRoles: RoleProps[]
   nonSelectedRoles: RoleProps[]
@@ -24,16 +38,30 @@ type RoleStore = {
   increaseCount: (roleIndex: number) => void
   decreaseCount: (roleIndex: number) => void
   addToSelectedRoles: (roleIndex: number) => void
+  resetStore: () => void
 }
 
-export const useRoleStore = create<RoleStore>((set) => ({
+const initialState: RoleStoreInitialState = {
   selectedRoles: [
     { roleType: Villager, count: 3 },
     { roleType: Seer, count: 1 },
     { roleType: Werewolf, count: 1 },
   ],
-  nonSelectedRoles: [],
+  nonSelectedRoles: [
+    { roleType: Templar, count: 1 },
+    { roleType: Hunter, count: 1 },
+    { roleType: Doctor, count: 1 },
+    { roleType: Gunslinger, count: 1 },
+    { roleType: Witch, count: 1 },
+    { roleType: Priest, count: 1 },
+    { roleType: ToughGuy, count: 1 },
+    { roleType: Assassin, count: 1 },
+  ],
   modalRole: null,
+}
+
+export const useRoleStore = create<RoleStore>((set) => ({
+  ...initialState,
 
   setModalRole: (roleType) =>
     set((state) => {
@@ -91,4 +119,6 @@ export const useRoleStore = create<RoleStore>((set) => ({
         selectedRoles: updatedSelectedRoles,
       }
     }),
+
+  resetStore: () => set(initialState),
 }))

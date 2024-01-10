@@ -1,12 +1,13 @@
 import { Button } from "@/components/button/Button"
 import { Typography } from "@/components/typography/Typography"
 import { Stack, useLocalSearchParams, useRouter } from "expo-router"
-import { View } from "react-native"
+import { ScrollView, View } from "react-native"
 import { useGameStore } from "../game-store"
 
 export default function NightEndPage() {
   const router = useRouter()
   const game = useGameStore((state) => state.game)
+  const resetGame = useGameStore((state) => state.resetGame)
   const winnerTeamMessage = game.getVictoryManager().getWinnerTeam()?.message
   const turnMessages = game?.getMessages()
   //@ts-ignore
@@ -22,27 +23,49 @@ export default function NightEndPage() {
     router.replace("/clock")
   }
 
+  const handleRestartGame = () => {
+    resetGame()
+    //@ts-ignore
+    router.push("/players")
+  }
+
   return (
     <>
       <Stack.Screen options={{ headerTitle: "", headerBackVisible: false }} />
-      <View className="flex-1 items-center p-2 bg-primary">
+      <View className="flex-1 p-2 bg-primary">
         {winnerTeamMessage ? (
-          <Typography variant="header">{winnerTeamMessage}</Typography>
+          <>
+            <Typography variant="header">{winnerTeamMessage}</Typography>
+            <ScrollView contentContainerStyle={{ marginTop: 30 }}>
+              {game.getPlayers().map((player, index) => (
+                <Typography key={index}>
+                  {`${player.getName()}: ${player.getRole().getName()}`}
+                </Typography>
+              ))}
+            </ScrollView>
+            <Button
+              className="w-full"
+              title="Jogar novamente"
+              onPress={handleRestartGame}
+            />
+          </>
         ) : (
-          turnMessages?.map((message, index) => (
-            <Typography key={index} variant="header">
-              {message}
-            </Typography>
-          ))
+          <>
+            {turnMessages?.map((message, index) => (
+              <Typography key={index} variant="title">
+                {message}
+              </Typography>
+            ))}
+            <Button
+              className="w-full mt-auto"
+              title={
+                lastPage === "/votation" ? "Anoitecer" : "Iniciar discussão"
+              }
+              onPress={handleNextPage}
+              inverted
+            />
+          </>
         )}
-
-        <View className="w-full mt-auto">
-          <Button
-            title={lastPage === "/votation" ? "Anoitecer" : "Iniciar discussão"}
-            onPress={handleNextPage}
-            inverted
-          />
-        </View>
       </View>
     </>
   )

@@ -19,6 +19,7 @@ export class Villager extends Role {
         "Você tem 5% de chance de proteger um jogador de ser morto esta noite.",
       icon: (props) => <IconPrayerBeads {...props} />,
       isTarget: true,
+      isPassive: false,
       interactWithDeadPlayers: false,
       hasFeedback: false,
       order: "first",
@@ -29,6 +30,7 @@ export class Villager extends Role {
       description: "Você tem 5% de chance de descobrir um lobisomem.",
       icon: (props) => <IconLockSpy {...props} />,
       isTarget: false,
+      isPassive: false,
       interactWithDeadPlayers: false,
       hasFeedback: true,
       order: "second",
@@ -60,7 +62,7 @@ export class Villager extends Role {
     const chance = 0.05
     const randomNumber = Math.random()
     if (randomNumber <= chance) {
-      targetPlayer.protect()
+      targetPlayer.preventDeath()
     }
   }
 

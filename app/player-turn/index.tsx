@@ -20,10 +20,11 @@ export default function PlayerTurnPage() {
   return (
     <>
       <Stack.Screen options={{ headerTitle: "", headerBackVisible: false }} />
-      <View className="flex-1 bg-primary items-center p-2">
+      <View className="flex-1 items-center pt-2 bg-primary">
         {/*  @ts-ignore */}
+
         <Typography variant="header">{role.getName()}</Typography>
-        <Image source={role.getPortrait()} className="my-4 w-60 h-60" />
+        <Image source={role.getPortrait()} className="my-2 w-60 h-60" />
 
         {!state.selectedSkillOrder && (
           <>
@@ -31,12 +32,18 @@ export default function PlayerTurnPage() {
             <SkillButton
               skill={role.getSkill("first")}
               onPress={() => handleSkillChoice("first")}
+              className="mt-4 px-2"
             />
             <SkillButton
               skill={role.getSkill("second")}
               onPress={() => handleSkillChoice("second")}
+              className="mt-4 px-2"
             />
           </>
+        )}
+
+        {state.feedbackMessage && (
+          <Typography>{state.feedbackMessage}</Typography>
         )}
 
         {state.showTargetPlayers && (
@@ -49,14 +56,11 @@ export default function PlayerTurnPage() {
             currentPlayer={game.getCurrentPlayer()}
             selectedPlayer={state.selectedPlayer}
             setSelectedPlayer={state.setSelectedPlayer}
+            chosenSkill={state.selectedSkillOrder}
           />
         )}
 
-        {state.feedbackMessage && (
-          <Typography>{state.feedbackMessage}</Typography>
-        )}
-
-        <View className="w-full mt-auto">
+        <View className="w-full mt-auto p-2">
           {state.showTargetPlayers &&
           state.selectedPlayer &&
           !state.feedbackMessage ? (

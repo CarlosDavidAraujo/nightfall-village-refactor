@@ -2,8 +2,7 @@ import { Player } from "../player/Player"
 import { VictoryManager } from "./victory-manager"
 
 export class Game {
-  private alivePlayers: Player[] = []
-  private deadPlayers: Player[] = []
+  private players: Player[] = []
   private messages: string[] = []
   private currentPlayerIndex = 0
   private currentTurn = 1
@@ -13,16 +12,18 @@ export class Game {
   constructor() {}
 
   //----------------Jogadores-----------------//
-
-  getAlivePlayers = () => this.alivePlayers
-  setAlivePlayers = (players: Player[]) => (this.alivePlayers = players)
-  getDeadPlayers = () => this.deadPlayers
-  getCurrentPlayer = () => this.alivePlayers[this.currentPlayerIndex]
+  getPlayers = () => this.players
+  setPlayers = (players: Player[]) => (this.players = players)
+  getAlivePlayers = () => this.players.filter((player) => !player.isDead())
+  getDeadPlayers = () => this.players.filter((player) => player.isDead())
+  getCurrentPlayer = () => this.getAlivePlayers()[this.currentPlayerIndex]
   goToNextPlayer = () => this.currentPlayerIndex++
-  noNextPlayer = () => this.currentPlayerIndex >= this.alivePlayers.length
+  noNextPlayer = () => this.currentPlayerIndex >= this.getAlivePlayers().length
   restartPlayerOrder = () => {
     this.currentPlayerIndex = 0
   }
+  getTauntingPlayer = () =>
+    this.getAlivePlayers().find((player) => player.isTauting())
 
   //-----------------Mensagens------------------//
   getMessages = () => this.messages
@@ -41,19 +42,28 @@ export class Game {
    * reseta os status necessários de cada um restaura a ordem da rodada.
    */
   endNight = () => {
-    this.alivePlayers.forEach((player) => {
+    const alivePlayersBeforeRemotion = this.getAlivePlayers()
+    this.players.forEach((player) => {
       player.remove()
+      player.resurrect()
       player.resetStatus()
     })
+    if (this.getAlivePlayers().length === alivePlayersBeforeRemotion.length) {
+      this.addMessage("Ninguém morreu esta noite")
+    }
     this.restartPlayerOrder()
     this.phase = "day"
   }
 
   endDay = () => {
-    this.alivePlayers.forEach((player) => {
+    const alivePlayersBeforeRemotion = this.getAlivePlayers()
+    this.players.forEach((player) => {
       player.remove()
       player.resetStatus()
     })
+    if (this.getAlivePlayers().length === alivePlayersBeforeRemotion.length) {
+      this.addMessage("A vila ficou indecisa")
+    }
     this.restartPlayerOrder()
     this.phase = "night"
     this.currentTurn++

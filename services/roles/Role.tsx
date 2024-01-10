@@ -70,6 +70,7 @@ export class Role {
   getSkill = (skillOrder: SkillOrder) => {
     return this.skills[skillOrder]
   }
+
   /**
    * Checa se a habilidade está bloqueada
    * @param skillOrder A habilidade a ser checada
@@ -83,6 +84,7 @@ export class Role {
       duration >= currentTurn && disableActionRegisteredTurn !== currentTurn
     )
   }
+
   /**
    * Desabilita uma habilidade por um tempo determinado
    * @param skillOrder A habilidade que será bloqueada
@@ -97,4 +99,12 @@ export class Role {
       this.skillDisabler[skillOrder].disableActionRegisteredTurn = curretTurn
     }
   }
+
+  /**
+   * Verifica se o jogador não pode ser alvejado por uma habilidade
+   * @param targetPlayer O jogador alvo
+   * @param chosenSkill A habilidade escolhida
+   * @returns
+   */
+  hasInvalidTargetOn = (targetPlayer: Player, chosenSkill?: SkillOrder) => false
 }

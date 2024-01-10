@@ -19,6 +19,7 @@ export function Typography({
   color = "primary-foreground",
   align = "start",
   variant = "body",
+  className,
   ...rest
 }: TypographyProps) {
   return (
@@ -29,9 +30,11 @@ export function Typography({
             ? "Balthazar_400Regular"
             : "GermaniaOne_400Regular",
       }}
-      className={`flex-shrink
+      className={
+        `flex-shrink
       ${variantStyles[variant]} 
-      text-${color} text-${align}`}
+      text-${color} text-${align} ` + className
+      }
       {...rest}
     >
       {children}

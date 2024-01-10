@@ -10,7 +10,7 @@ export default function Votation() {
   return (
     <>
       <Stack.Screen options={{ headerTitle: "", headerBackVisible: false }} />
-      <View className="flex-1 items-center py-2 bg-primary">
+      <View className="flex-1 items-center justify-between py-2 bg-primary">
         <Typography variant="header">
           {game.getCurrentPlayer().getName()} vote em um jogador
         </Typography>

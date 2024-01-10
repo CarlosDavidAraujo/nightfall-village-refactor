@@ -19,7 +19,7 @@ export const useVotation = () => {
     if (game.noNextPlayer()) {
       const mostVotedPlayer = state.getMostVotedPlayer(game.getAlivePlayers())
       if (mostVotedPlayer) {
-        mostVotedPlayer.setDeathMark(0)
+        mostVotedPlayer.setDeath(0)
       }
       game.endDay()
       return navigateToTurnMessages()

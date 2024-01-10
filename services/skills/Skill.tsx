@@ -6,6 +6,7 @@ export interface SkillProps {
   description: string
   icon: SkillIcon
   isTarget: boolean
+  isPassive: boolean
   interactWithDeadPlayers: boolean
   hasFeedback: boolean
   order: SkillOrder
@@ -17,6 +18,7 @@ export class Skill implements SkillProps {
   description: string
   icon: SkillIcon
   isTarget: boolean
+  isPassive: boolean
   interactWithDeadPlayers: boolean
   hasFeedback: boolean
   order: SkillOrder
@@ -27,6 +29,7 @@ export class Skill implements SkillProps {
     this.description = skill.description
     this.icon = skill.icon
     this.isTarget = skill.isTarget
+    this.isPassive = skill.isPassive
     this.interactWithDeadPlayers = skill.interactWithDeadPlayers
     this.hasFeedback = skill.hasFeedback
     this.order = skill.order
